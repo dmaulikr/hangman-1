@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Hangman from "./src/Hangman";
 
-export default class App extends Component {
+export default class HangmanView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Hangman />
+        <Text>Kiss Me Hannah!</Text>
       </View>
     );
   }
@@ -20,3 +19,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+// map out tiles
+// map out wrong guesses
+// button onClick handleLetterClick. They will be selecting letters
+// make guesses disabled
