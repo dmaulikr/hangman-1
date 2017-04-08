@@ -6,9 +6,9 @@ import HangmanView from "./HangmanView";
 export default class Hangman extends Component {
   state = { word: new List(), wrongGuesses: new List(), guesses: new List() };
 
-  componentDidMount() {
-    this.getRandomWord();
-  }
+  // componentDidMount() {
+  //   this.getRandomWord();
+  // }
 
   restartGame = () => {
     this.setState({ wrongGuesses: new List(), guesses: new List() });
@@ -31,23 +31,26 @@ export default class Hangman extends Component {
     .then((responseJson) => {
       console.log(responseJson);
       const word = responseJson.toLowerCase().split('')
-      this.setState({ word: word})
-    }).catch((error) => {
-      console.error(error);
-    });
+      this.setState({ word })
+    }).catch((error) => console.warn(error));
   }
 
-  handleLetterClick = (letter) => {
-    let { guesses, wrongGuesses } = this.state;
+  handleLetterPress = (letter) => {
+    let { word, guesses, wrongGuesses } = this.state;
 		guesses = guesses.push(letter);
     this.setState({ guesses })
     if (word.includes(letter)) {
       const index = word.indexOf(letter)
-      $('#t'+i).append(letter); // make letter appear.
+      this.makeLetterAppear(index);
       this.checkAnswer()
     } else {
       wrongGuesses = wrongGuesses.push(letter);
       wrongAnswer(wrongGuesses)
+    }
+  }
+
+  makeLetterAppear = () => {
+
   }
 
   checkAnswer = () => {
@@ -70,15 +73,14 @@ export default class Hangman extends Component {
            alertMessage,
            'Would you like to play again?',
            [{ text: 'No' }, { text: 'Yes', onPress: () => this.restartGame() }],
-         );
+         )
   }
-
 
   render() {
     return (
       <HangmanView
         restartGame={this.restartGame}
-        handleLetterClick={this.handleLetterClick}
+        handleLetterPress={this.handleLetterPress}
         {...this.state}
       />
     );
