@@ -58,6 +58,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
+    marginTop: 25,
+    marginBottom: 15,
   },
   letterView: {
     flex: 1,

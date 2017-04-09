@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   right: {
     flex: 1,
-    // borderWidth: 5,
+    borderWidth: 5,
   },
   gallow: {
     height: 375,
