@@ -1,53 +1,38 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, Button } from 'react-native';
+import React, { Proptypes } from 'react';
+import { StyleSheet, View, Button, Text } from 'react-native';
+import Gallows from './Gallows';
 import Keyboard from './Keyboard';
 
-export default class HangmanView extends Component {
-  render() {
-    const { restartGame } = this.props;
-    return (
-      <View style={styles.container}>
-        <View style={styles.top}>
-          <Button
-            title='Home'
-            style={styles.topButtons}
-          />
-          <Button
-            title='New Game'
-            style={styles.topButtons}
-            onPress={restartGame}
-          />
+const HangmanView = (props) => {
+  return (
+    <View style={styles.container}>
+      <View style={styles.top}>
+        <View style={styles.topButtons}>
+          <Button title='Home' color='#fff' onPress={props.restartGame}/>
         </View>
-        <View style={styles.middle}>
-          <Image
-            source={require('./img/gallow.png')}
-            style={styles.gallow}
-          />
-        </View>
-        <View style={styles.bottom}>
-          <Keyboard />
+        <View style={styles.topButtons}>
+          <Button title='New Game' color='#fff' onPress={props.restartGame}/>
         </View>
       </View>
-    );
-  }
-}
+      <Gallows {...props}/>
+      <View style={styles.lowerMiddle}>
+        {props.word.map((letter, i) =>
+          <View key={i} style={styles.letterView}>
+            <Text style={styles.letter}>{letter}</Text>
+          </View>
+        )}
+      </View>
+      <Keyboard {...props}/>
+    </View>
+  )
+};
 
-// home button left
-// new game button to right
-// gallow to left
-// wrong guesss to right
-// word
-// keyboard
-
-// map out tiles
-// map out wrong guesses
-// button onClick handleLetterClick. They will be selecting letters
-// make guesses disabled
+export default HangmanView;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#afd1ff',
+    backgroundColor: '#dddddd',
   },
   top: {
     flex: 1,
@@ -55,17 +40,33 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     paddingTop: 20,
   },
-  middle: {
-    flex: 5,
-  },
-  bottom: {
-    flex: 2,
-  },
-  gallow: {
-    height: 250,
-    width: 225,
-  },
   topButtons: {
-    padding: '10px',
+    height: 45,
+    width: 125,
+    borderRadius: 5,
+    padding: 5,
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 10,
+    shadowOpacity: 0.25,
+    backgroundColor: '#2E9298',
+  },
+  lowerMiddle: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  letterView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+  },
+  letter: {
+    fontSize: 20,
+    borderBottomWidth: 5,
   },
 });

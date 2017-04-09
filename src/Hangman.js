@@ -6,9 +6,9 @@ import HangmanView from "./HangmanView";
 export default class Hangman extends Component {
   state = { word: new List(), wrongGuesses: new List(), guesses: new List() };
 
-  // componentDidMount() {
-  //   this.getRandomWord();
-  // }
+  componentDidMount() {
+    this.getRandomWord();
+  }
 
   restartGame = () => {
     this.setState({ wrongGuesses: new List(), guesses: new List() });
@@ -16,21 +16,13 @@ export default class Hangman extends Component {
   }
 
   getRandomWord = () => {
-    const params = {
-      method: 'GET',
-      hasDictionaryDef: true,
-      minCorpusCount: 0,
-      maxCorpusCount: -1,
-      maxDictionaryCount: -1,
-      minLength: 5,
-      maxLength: 12,
-      api_key: '7e7c12c6c2ef452e877100b856b02d429510bfc86590afc9e'
-    };
-    return fetch('http://api.wordnik.com/v4/words.json/randomWord', params)
+    const dict = 'hasDictionaryDef=false&minCorpusCount=0&maxCorpusCount=-1';
+    const min = '&minDictionaryCount=1&maxDictionaryCount=-1&minLength=4&maxLength=12';
+    const apiKey = '&api_key=7e7c12c6c2ef452e877100b856b02d429510bfc86590afc9e';
+    return fetch(`http://api.wordnik.com/v4/words.json/randomWord?${dict}${min}${apiKey}`)
     .then((response) => response.json())
     .then((responseJson) => {
-      console.log(responseJson);
-      const word = responseJson.toLowerCase().split('')
+      const word = responseJson.word.toLowerCase().split('')
       this.setState({ word })
     }).catch((error) => console.warn(error));
   }
@@ -81,7 +73,9 @@ export default class Hangman extends Component {
       <HangmanView
         restartGame={this.restartGame}
         handleLetterPress={this.handleLetterPress}
-        {...this.state}
+        word={this.state.word}
+        wrongGuesses={this.state.wrongGuesses}
+        guesses={this.state.guesses}
       />
     );
   }
