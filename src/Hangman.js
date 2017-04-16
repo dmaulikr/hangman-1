@@ -6,6 +6,27 @@ import HangmanView from "./HangmanView";
 export default class Hangman extends Component {
   state = { word: this.props.word, wrongGuesses: new List(), guesses: new List() };
 
+  getHangingMan = () => {
+    const images = {
+      1: require('./img/man1.png'),
+      2: require('./img/man2.png'),
+      3: require('./img/man3.png'),
+      4: require('./img/man4.png'),
+      5: require('./img/man5.png'),
+      6: require('./img/man6.png'),
+      7: require('./img/man7.png'),
+    }
+    return images[this.state.wrongGuesses.size + 1];
+  }
+
+  alertRestart = () => {
+    Alert.alert(
+      'You have a game running.',
+      'Are you sure you want to restart?',
+      [{ text: 'No' }, { text: 'Yes', onPress: () => this.restartGame() }],
+    )
+  }
+
   restartGame = () => {
     this.setState({ wrongGuesses: new List(), guesses: new List() });
   	this.props.restartGame();
@@ -26,33 +47,46 @@ export default class Hangman extends Component {
 
   checkAnswer = (guesses, word) => {
   	const currentAnswer = word.filter(letter => guesses.includes(letter))
-    console.log('word size', word.size);
-    console.log('word lengtj', word.length);
-    console.log();
-  	if (currentAnswer.size === word.size) {
-      this.alert('You Win!')
+  	if (currentAnswer.length === word.length) {
+      this.alertGameOver('You Win!')
     }
   }
 
   wrongAnswer = (wrongGuesses) => {
-    console.log('wrong g', wrongGuesses);
-    if (wrongGuesses.size === 6) this.alert('You Lose')
     this.setState({ wrongGuesses });
+    if (wrongGuesses.size === 6) {
+      setTimeout(() => { this.alertGameOver('You Lose') }, 2000);
+    }
   }
 
-  alert = (alertMessage) => {
+  alertGameOver = (alertMessage) => {
     Alert.alert(
       alertMessage,
       'Would you like to play again?',
-      [{ text: 'No' }, { text: 'Yes', onPress: () => this.restartGame() }],
+      [
+        { text: 'No', onPress: () => this.goHome() },
+        { text: 'Yes', onPress: () => this.restartGame() },
+      ],
     )
   }
+
+  alertHome = () => {
+    Alert.alert(
+      'You have a game running.',
+      'Are you sure you want to go home?',
+      [{ text: 'No' }, { text: 'Yes', onPress: () => this.goHome() }],
+    )
+  }
+
+  goHome = () => this.props.navigator.push({ name: 'home' })
 
   render() {
     return (
       <HangmanView
-        restartGame={this.restartGame}
+        alertHome={this.alertHome}
+        alertRestart={this.alertRestart}
         handleLetterPress={this.handleLetterPress}
+        getHangingMan={this.getHangingMan}
         word={this.state.word}
         wrongGuesses={this.state.wrongGuesses}
         guesses={this.state.guesses}

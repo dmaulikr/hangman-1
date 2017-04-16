@@ -18,6 +18,6 @@ export default class TwoPlayer extends Component {
   }
 
   render() {
-    return <Hangman word={this.state.word} restartGame={this.restartGame}/>
+    return <Hangman word={this.state.word} restartGame={this.restartGame} {...this.props}/>
   }
 }

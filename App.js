@@ -1,40 +1,29 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Navigator, TouchableHighlight } from 'react-native';
-
-const routes = [
-  {title: 'Home', index: 0},
-  {title: '1 Player', index: 1},
-  {title: '2 Players', index: 2},
-];
+import { Text, Navigator, TouchableHighlight } from 'react-native';
+import Home from './src/Home';
+import OnePlayer from './src/OnePlayer';
+import TwoPlayers from './src/TwoPlayers';
 
 export default class App extends Component {
 
+  renderScene = (route, navigator) => {
+    if (route.name == 'one') {
+      return <OnePlayer navigator={navigator} />
+    } else if (route.name == 'two') {
+      return <TwoPlayers navigator={navigator} />
+    } else {
+      return <Home navigator={navigator} />
+    }
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <Navigator
-          initialRoute={routes[0]}
-          initialRouteStack={routes}
-          renderScene={(route, navigator) =>
-            <TouchableHighlight onPress={() => {
-              if (route.index === 0) {
-                navigator.push(routes[1]);
-              } else {
-                navigator.pop();
-              }
-            }}>
-            <Text>Hello {route.title}!</Text>
-            </TouchableHighlight>
-          }
-          style={{padding: 100}}
-        />
-      </View>
+      <Navigator
+        initialRoute={{ name: 'Home' }}
+        configureScene={(route, routeStack) => Navigator.SceneConfigs.FloatFromRight}
+        renderScene={this.renderScene}
+        style={{ flex: 1 }}
+      />
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

@@ -4,7 +4,9 @@ import { Text, View, Image, StyleSheet } from 'react-native';
 const Gallows = (props) => (
   <View style={styles.container}>
     <View style={styles.left}>
-      <Image source={require('./img/gallow.png')} style={styles.gallow}/>
+      <Image source={require('./img/gallow.png')} style={styles.gallow}>
+        <Image source={props.getHangingMan()} style={styles.man}/>
+      </Image>
     </View>
     <View style={styles.right}>
       {!props.wrongGuesses ? null : props.wrongGuesses.map((letter, i) =>
@@ -14,7 +16,7 @@ const Gallows = (props) => (
       )}
     </View>
   </View>
-);
+)
 
 export default Gallows;
 
@@ -29,7 +31,8 @@ const styles = StyleSheet.create({
   right: {
     flex: 1,
     padding: 10,
-    flexDirection: 'row'
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   letter: {
     fontSize: 35,
@@ -37,5 +40,9 @@ const styles = StyleSheet.create({
   gallow: {
     height: 375,
     width: 250,
+    alignItems: 'flex-end'
+  },
+  man: {
+    top: 35,
   },
 });

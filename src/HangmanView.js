@@ -9,10 +9,10 @@ const HangmanView = (props) => {
     <View style={styles.container}>
       <View style={styles.top}>
         <View style={styles.topButtons}>
-          <Button title='Home' color='#fff' onPress={props.restartGame}/>
+          <Button title='Home' color='#fff' onPress={props.alertHome}/>
         </View>
         <View style={styles.topButtons}>
-          <Button title='New Game' color='#fff' onPress={props.restartGame}/>
+          <Button title='New Game' color='#fff' onPress={props.alertRestart}/>
         </View>
       </View>
       <Gallows {...props}/>
