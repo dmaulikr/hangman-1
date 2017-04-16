@@ -7,9 +7,9 @@ const Gallows = (props) => (
       <Image source={require('./img/gallow.png')} style={styles.gallow}/>
     </View>
     <View style={styles.right}>
-      {props.wrongGuesses.map((letter, i) =>
+      {!props.wrongGuesses ? null : props.wrongGuesses.map((letter, i) =>
         <View key={i}>
-          <Text>{letter}</Text>
+          <Text style={styles.letter}>{letter}</Text>
         </View>
       )}
     </View>
@@ -28,7 +28,11 @@ const styles = StyleSheet.create({
   },
   right: {
     flex: 1,
-    borderWidth: 5,
+    padding: 10,
+    flexDirection: 'row'
+  },
+  letter: {
+    fontSize: 35,
   },
   gallow: {
     height: 375,

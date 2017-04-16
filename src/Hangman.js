@@ -4,68 +4,48 @@ import { List } from 'immutable'
 import HangmanView from "./HangmanView";
 
 export default class Hangman extends Component {
-  state = { word: new List(), wrongGuesses: new List(), guesses: new List() };
-
-  componentDidMount() {
-    this.getRandomWord();
-  }
+  state = { word: this.props.word, wrongGuesses: new List(), guesses: new List() };
 
   restartGame = () => {
     this.setState({ wrongGuesses: new List(), guesses: new List() });
-  	this.getRandomWord();
-  }
-
-  getRandomWord = () => {
-    const dict = 'hasDictionaryDef=false&minCorpusCount=0&maxCorpusCount=-1';
-    const min = '&minDictionaryCount=1&maxDictionaryCount=-1&minLength=4&maxLength=12';
-    const apiKey = '&api_key=7e7c12c6c2ef452e877100b856b02d429510bfc86590afc9e';
-    return fetch(`http://api.wordnik.com/v4/words.json/randomWord?${dict}${min}${apiKey}`)
-    .then((response) => response.json())
-    .then((responseJson) => {
-      const word = responseJson.word.toLowerCase().split('')
-      this.setState({ word })
-    }).catch((error) => console.warn(error));
+  	this.props.restartGame();
   }
 
   handleLetterPress = (letter) => {
     let { word, guesses, wrongGuesses } = this.state;
 		guesses = guesses.push(letter);
-    this.setState({ guesses })
     if (word.includes(letter)) {
-      const index = word.indexOf(letter)
-      this.makeLetterAppear(index);
-      this.checkAnswer()
-    } else {
+      this.checkAnswer(guesses, word)
+    }
+    else {
       wrongGuesses = wrongGuesses.push(letter);
-      wrongAnswer(wrongGuesses)
+      this.wrongAnswer(wrongGuesses)
+    }
+    this.setState({ guesses })
+  }
+
+  checkAnswer = (guesses, word) => {
+  	const currentAnswer = word.filter(letter => guesses.includes(letter))
+    console.log('word size', word.size);
+    console.log('word lengtj', word.length);
+    console.log();
+  	if (currentAnswer.size === word.size) {
+      this.alert('You Win!')
     }
   }
 
-  makeLetterAppear = () => {
-
-  }
-
-  checkAnswer = () => {
-  	var currentAnswer="";
-  	for(i=0;i<currentWord.length;i++){
-  		currentAnswer+=($('#t'+i).text()); // checking if word === current answer
-  	}
-  	if( currentAnswer === currentWord) {
-
-    } // alert two buttons.
-  }
-
   wrongAnswer = (wrongGuesses) => {
-    if (wrongGuesses === 6) this.alert('You lose')
-    setState({ wrongGuesses });
+    console.log('wrong g', wrongGuesses);
+    if (wrongGuesses.size === 6) this.alert('You Lose')
+    this.setState({ wrongGuesses });
   }
 
   alert = (alertMessage) => {
     Alert.alert(
-           alertMessage,
-           'Would you like to play again?',
-           [{ text: 'No' }, { text: 'Yes', onPress: () => this.restartGame() }],
-         )
+      alertMessage,
+      'Would you like to play again?',
+      [{ text: 'No' }, { text: 'Yes', onPress: () => this.restartGame() }],
+    )
   }
 
   render() {

@@ -1,6 +1,7 @@
 import React, { Proptypes } from 'react';
 import { StyleSheet, View, Button, Text } from 'react-native';
 import Gallows from './Gallows';
+import LetterToWord from './LetterToWord';
 import Keyboard from './Keyboard';
 
 const HangmanView = (props) => {
@@ -15,13 +16,7 @@ const HangmanView = (props) => {
         </View>
       </View>
       <Gallows {...props}/>
-      <View style={styles.lowerMiddle}>
-        {props.word.map((letter, i) =>
-          <View key={i} style={styles.letterView}>
-            <Text style={styles.letter}>{letter}</Text>
-          </View>
-        )}
-      </View>
+      <LetterToWord {...props}/>
       <Keyboard {...props}/>
     </View>
   )
@@ -53,22 +48,5 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOpacity: 0.25,
     backgroundColor: '#2E9298',
-  },
-  lowerMiddle: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 25,
-    marginBottom: 15,
-  },
-  letterView: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-  },
-  letter: {
-    fontSize: 20,
-    borderBottomWidth: 5,
   },
 });
