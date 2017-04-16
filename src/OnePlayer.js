@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
 import Hangman from './Hangman';
 import { ActivityIndicator, View, Text } from 'react-native'
-
-const loadingPhrases = [
-  'Fetching the guillotine...',
-  'Hang on hangman...',
-  'Tying the nouse...',
-  'Looking for the droids in the west...',
-  'Getting a new man to replace...',
-]
+import { getRandomLoading } from './hangmanHelper'
 
 export default class OnePlayer extends Component {
   state = { word: '', isLoading: true }
@@ -34,8 +27,6 @@ export default class OnePlayer extends Component {
     }).catch((error) => console.warn(error));
   }
 
-  getRandomLoading = () => loadingPhrases[Math.floor(Math.random() * loadingPhrases.length)];
-
   render() {
     return this.state.isLoading ?
       <View
@@ -45,7 +36,7 @@ export default class OnePlayer extends Component {
           alignItems: 'center',
         }}
         >
-        <Text style={{ marginBottom: 10 }}>{this.getRandomLoading()}</Text>
+        <Text style={{ marginBottom: 10 }}>{getRandomLoading()}</Text>
         <ActivityIndicator size='large'/>
       </View>
     :

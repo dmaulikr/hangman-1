@@ -10,7 +10,7 @@ export default class App extends Component {
     if (route.name == 'one') {
       return <OnePlayer navigator={navigator} />
     } else if (route.name == 'two') {
-      return <TwoPlayers navigator={navigator} />
+      return <TwoPlayers navigator={navigator} {...route.passProps}/>
     } else {
       return <Home navigator={navigator} />
     }
