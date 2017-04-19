@@ -12,7 +12,7 @@ export default class TwoPlayer extends Component {
   }
 
   handlePromptSubmit = (value) => {
-    const word = value.replace(/\s/g,'').toLowerCase().split('');
+    const word = value.replace(/[^A-Za-z']/g,'').toLowerCase().split('');
     this.setState({ word, promptVisible: false, isLoading: false })
   }
 
@@ -33,7 +33,7 @@ export default class TwoPlayer extends Component {
           <Hangman word={this.state.word} restartGame={this.restartGame} {...this.props}/>
         }
         <Prompt
-          title='Enter one word for a friend to guess'
+          title='Enter a word for a friend to guess'
           placeholder='Use only letters, up to 12'
           visible={this.state.promptVisible}
           onCancel={this.handlePromptCancel}

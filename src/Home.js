@@ -6,7 +6,7 @@ export default class Home extends Component {
   state = { promptVisible: false }
 
   handlePromptSubmit = (value) => {
-    const word = value.replace(/\s/g,'').toLowerCase().split('');
+    const word = value.replace(/[^A-Za-z']/g,'').toLowerCase().split('');
     this.props.navigator.push({ name: 'two', passProps: { peopleWord: word } })
     this.handlePromptCancel();
   }
@@ -35,9 +35,9 @@ export default class Home extends Component {
               onPress={() => this.setState({ promptVisible: true })}
             />
             <Prompt
-              title='Enter one word for a friend to guess'
+              title='Enter a word for a friend to guess'
               placeholder='Use only letters, up to 12'
-              visible={ this.state.promptVisible }
+              visible={this.state.promptVisible}
               onCancel={this.handlePromptCancel}
               onSubmit={this.handlePromptSubmit}
             />

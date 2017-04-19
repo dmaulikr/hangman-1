@@ -1,5 +1,20 @@
 {
   "expo": {
-    "sdkVersion": "15.0.0"
+    "sdkVersion": "15.0.0",
+    "name": "Hangman",
+    "description": "A hangman app",
+    "slug": "hangmang",
+    "privacy": "public",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "primaryColor": "#cccccc",
+    "icon": "./src/img/icon.png",
+    "loading": {
+      "icon": "./src/img/icon.png",
+      "hideExponentText": false
+    },
+    "ios": {
+      "supportsTablet": true
+    }
   }
 }

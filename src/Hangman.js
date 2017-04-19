@@ -55,14 +55,16 @@ export default class Hangman extends Component {
   wrongAnswer = (wrongGuesses) => {
     this.setState({ wrongGuesses });
     if (wrongGuesses.size === 6) {
-      setTimeout(() => { this.alertGameOver('You Lose') }, 2000);
+      setTimeout(() => { this.alertGameOver('You Lose') }, 1000);
     }
   }
 
   alertGameOver = (alertMessage) => {
+    const descr = alertMessage === 'You Lose' ?
+      `The correct word was ${this.state.word.join('').toUpperCase()}. ` : '';
     Alert.alert(
       alertMessage,
-      'Would you like to play again?',
+      `${descr}Would you like to play again?`,
       [
         { text: 'No', onPress: () => this.goHome() },
         { text: 'Yes', onPress: () => this.restartGame() },
