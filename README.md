@@ -1,6 +1,6 @@
-#Hangman app
+# Hangman app
 
-###built with React Native, Expo, and wordnik API.
+### Built with React Native, Expo, and wordnik API.
 
 
-#### Craig Walker
+*Craig Walker*
