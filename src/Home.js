@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Button, StyleSheet, Text, Image } from 'react-native';
+import { View, StyleSheet, Text, Image } from 'react-native';
 import Prompt from 'react-native-prompt';
+import Button from './Button';
 
 export default class Home extends Component {
   state = { promptVisible: false }
@@ -8,10 +9,12 @@ export default class Home extends Component {
   handlePromptSubmit = (value) => {
     const word = value.replace(/[^A-Za-z']/g,'').toLowerCase().split('');
     this.props.navigator.push({ name: 'two', passProps: { peopleWord: word } })
-    this.handlePromptCancel();
+    this.handlePrompt(false)();
   }
 
-  handlePromptCancel = () => this.setState({ promptVisible: false })
+  handlePrompt = (bool) => () => this.setState({ promptVisible: bool })
+
+  handleNavigator = () => this.props.navigator.push({ name: 'one' })
 
   render() {
     return (
@@ -21,27 +24,23 @@ export default class Home extends Component {
         </View>
         <View style={styles.home}>
           <Text style={styles.header}>Hangman</Text>
-          <View style={styles.button}>
-            <Button
-              title='1 Player'
-              color='#fff'
-              onPress={() => this.props.navigator.push({ name: 'one' })}
-            />
-          </View>
-          <View style={styles.button}>
-            <Button
-              title='2 Player'
-              color='#fff'
-              onPress={() => this.setState({ promptVisible: true })}
-            />
-            <Prompt
-              title='Enter a word for a friend to guess'
-              placeholder='Use only letters, up to 12'
-              visible={this.state.promptVisible}
-              onCancel={this.handlePromptCancel}
-              onSubmit={this.handlePromptSubmit}
-            />
-          </View>
+          <Button
+            style={styles.button}
+            text='1 Player'
+            handlePress={this.handleNavigator}
+          />
+          <Button
+            style={styles.button}
+            text='2 Player'
+            onPress={this.handlePrompt(true)}
+          />
+          <Prompt
+            title='Enter a word for a friend to guess'
+            placeholder='Use only letters, up to 12'
+            visible={this.state.promptVisible}
+            onCancel={this.handlePrompt(false)}
+            onSubmit={this.handlePromptSubmit}
+          />
         </View>
       </Image>
     );
@@ -77,16 +76,6 @@ const styles = StyleSheet.create({
   button: {
     height: 45,
     width: 200,
-    borderRadius: 5,
-    padding: 5,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3
-    },
-    shadowRadius: 10,
-    shadowOpacity: 0.25,
-    backgroundColor: '#2E9298',
     margin: 20,
   },
 });
