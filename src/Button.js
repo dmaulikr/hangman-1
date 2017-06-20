@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 export default class Button extends PureComponent {
 
@@ -22,15 +22,11 @@ export default class Button extends PureComponent {
   render() {
     const { disabled, text, handlePress } = this.props;
     return (
-      <TouchableHighlight
-        onPress={handlePress}
-        underlayColor='white'
-        activeOpacity={0.7}
-        >
+      <TouchableOpacity onPress={handlePress}>
         <View style={this.getStyles()}>
           <Text style={styles.buttonText}>{text}</Text>
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
   }
 }
