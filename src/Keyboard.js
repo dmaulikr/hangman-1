@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Button from './Button';
 
 const ROW_ONE = 'qwertyuiop'.split('');
@@ -15,6 +15,7 @@ export default class Keyboard extends Component {
     const disabled = this.props.guesses.includes(letter);
     return (
       <Button
+        key={letter}
         text={letter}
         handlePress={this.handlePress(letter, disabled)}
         disabled={disabled}

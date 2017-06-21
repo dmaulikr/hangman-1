@@ -4,11 +4,9 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 export default class Button extends PureComponent {
 
   getStyles = () => ({
-    width: this.props.style.width || null,
-    height: this.props.style.height || null,
     borderRadius: 5,
-    padding: 5,
-    margin: this.props.style.margin || 1,
+    padding: 10,
+    margin: 1,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -20,9 +18,9 @@ export default class Button extends PureComponent {
   })
 
   render() {
-    const { disabled, text, handlePress } = this.props;
+    const { disabled, text, handlePress, style } = this.props;
     return (
-      <TouchableOpacity onPress={handlePress}>
+      <TouchableOpacity onPress={handlePress} style={style}>
         <View style={this.getStyles()}>
           <Text style={styles.buttonText}>{text}</Text>
         </View>
@@ -34,5 +32,7 @@ export default class Button extends PureComponent {
 const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
+    textAlign: 'center',
+    padding: 3,
   },
 });

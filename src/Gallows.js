@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
   },
   left: {
     flex: 2,
+    margin: 2,
   },
   right: {
     flex: 1,

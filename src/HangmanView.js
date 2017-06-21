@@ -9,8 +9,8 @@ const HangmanView = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.top}>
-        <Button text='Home' handlePress={props.alertHome} style={topButtons}/>
-        <Button text='New Game' handlePress={props.alertRestart} style={topButtons}/>
+        <Button text='Home' handlePress={props.alertHome} style={styles.topButtons}/>
+        <Button text='New Game' handlePress={props.alertRestart} style={styles.topButtons}/>
       </View>
       <Gallows {...props}/>
       <LetterToWord {...props}/>
