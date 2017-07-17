@@ -32,7 +32,7 @@ export default class Home extends Component {
           <Button
             style={styles.button}
             text='2 Player'
-            onPress={this.handlePrompt(true)}
+            handlePress={this.handlePrompt(true)}
           />
           <Prompt
             title='Enter a word for a friend to guess'
