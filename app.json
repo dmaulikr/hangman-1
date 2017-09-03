@@ -5,12 +5,12 @@
     "description": "A hangman app",
     "slug": "hangman",
     "privacy": "public",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
-    "icon": "./src/img/icon.png",
+    "icon": "./src/img/icon.jpeg",
     "loading": {
-      "icon": "./src/img/icon.png",
+      "icon": "./src/img/icon.jpeg",
       "hideExponentText": false
     },
     "ios": {

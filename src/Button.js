@@ -5,7 +5,7 @@ export default class Button extends PureComponent {
 
   getStyles = () => ({
     borderRadius: 5,
-    padding: 10,
+    padding: 8,
     margin: 1,
     shadowColor: '#000',
     shadowOffset: {
