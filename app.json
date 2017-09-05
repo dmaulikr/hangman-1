@@ -8,9 +8,9 @@
     "version": "1.0.1",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
-    "icon": "./src/img/icon.jpeg",
+    "icon": "./src/img/icon.png",
     "loading": {
-      "icon": "./src/img/icon.jpeg",
+      "icon": "./src/img/icon.png",
       "hideExponentText": false
     },
     "ios": {
