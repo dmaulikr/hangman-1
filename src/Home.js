@@ -4,12 +4,18 @@ import Prompt from 'react-native-prompt';
 import Button from './Button';
 
 export default class Home extends Component {
-  state = { promptVisible: false }
+  state = { promptVisible: false, title: 'Enter a word for a friend' }
 
   handlePromptSubmit = (value) => {
-    const word = value.replace(/[^A-Za-z']/g,'').toLowerCase().split('');
-    this.props.navigator.push({ name: 'two', passProps: { peopleWord: word } })
-    this.handlePrompt(false)();
+    const word = value.replace(/[^A-Za-z]/g,'').toLowerCase().split('');
+    if (word.length > 12) {
+        this.setState({ title: 'Enter a shorter word' })
+    } else if (word.length < 2) {
+        this.setState({ title: 'Enter a longer word' })
+    } else {
+        this.props.navigator.push({ name: 'two', passProps: { peopleWord: word } })
+        this.handlePrompt(false)();
+    }
   }
 
   handlePrompt = (bool) => () => this.setState({ promptVisible: bool })
@@ -35,7 +41,7 @@ export default class Home extends Component {
             handlePress={this.handlePrompt(true)}
           />
           <Prompt
-            title='Enter a word for a friend to guess'
+            title={this.state.title}
             placeholder='Use only letters, up to 12'
             visible={this.state.promptVisible}
             onCancel={this.handlePrompt(false)}

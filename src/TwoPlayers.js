@@ -5,15 +5,21 @@ import Hangman from './Hangman';
 import { getRandomLoading } from './hangmanHelper'
 
 export default class TwoPlayer extends Component {
-  state = { promptVisible: false, word: this.props.peopleWord, isLoading: false }
+  state = { promptVisible: false, word: this.props.peopleWord, isLoading: false, title: 'Enter a word for a friend' }
 
   restartGame = () => {
-    this.setState({ word: '', promptVisible: true, isLoading: true });
+    this.setState({ word: '', promptVisible: true, isLoading: true, title: 'Enter a word for a friend' });
   }
 
   handlePromptSubmit = (value) => {
-    const word = value.replace(/[^A-Za-z']/g,'').toLowerCase().split('');
-    this.setState({ word, promptVisible: false, isLoading: false })
+    const word = value.replace(/[^A-Za-z]/g,'').toLowerCase().split('');
+    if (word.length > 12) {
+        this.setState({ title: 'Enter a shorter word' })
+    } else if (word.length < 2) {
+        this.setState({ title: 'Enter a longer word' })
+    } else {
+        this.setState({ word, promptVisible: false, isLoading: false })
+    }
   }
 
   handlePromptCancel = () => {
@@ -22,20 +28,21 @@ export default class TwoPlayer extends Component {
   }
 
   render() {
+    const { isLoading, promptVisible, title, word } = this.state;
     return (
       <View style={styles.middle}>
-        {this.state.isLoading  ?
+        {isLoading  ?
           <View style={styles.middle}>
             <Text style={{ marginBottom: 10 }}>{getRandomLoading()}</Text>
             <ActivityIndicator size='large'/>
           </View>
         :
-          <Hangman word={this.state.word} restartGame={this.restartGame} {...this.props}/>
+          <Hangman word={word} restartGame={this.restartGame} {...this.props}/>
         }
         <Prompt
-          title='Enter a word for a friend to guess'
+          title={title}
           placeholder='Use only letters, up to 12'
-          visible={this.state.promptVisible}
+          visible={promptVisible}
           onCancel={this.handlePromptCancel}
           onSubmit={this.handlePromptSubmit}
         />
