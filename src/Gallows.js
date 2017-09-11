@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     fontSize: 35,
   },
   gallow: {
-    height: 350,
+    height: 325,
     width: 250,
     alignItems: 'flex-end'
   },

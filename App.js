@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Navigator } from 'react-native-deprecated-custom-components';
-import { AppLoading } from 'expo';
+import { AppLoading, FacebookAds } from 'expo';
 import cacheAssetsAsync from './cacheAssetsAsync';
 import Home from './src/Home';
 import OnePlayer from './src/OnePlayer';
 import TwoPlayers from './src/TwoPlayers';
 
-// AdSettings.addTestDevice(AdSettings.currentDeviceHash);
+// FacebookAds.AdSettings.addTestDevice(FacebookAds.AdSettings.currentDeviceHash);
 
 export default class App extends Component {
   state = { appIsReady: false }
@@ -62,12 +62,11 @@ export default class App extends Component {
               renderScene={this.renderScene}
               style={styles.screen}
             />
-            {/* <View style={styles.ad}>
-              <FacebookAds.BannerView
-                placementId="315751648888224_317569755373080"
-                type="standard"
-              />
-            </View> */}
+            <FacebookAds.BannerView
+              placementId="315751648888224_317569755373080"
+              type="standard"
+              style={styles.ad}
+            />
         </View>
     );
   }
@@ -79,5 +78,6 @@ const styles = StyleSheet.create({
     },
     ad: {
         flex: 1,
+        height: 40,
     }
 });
