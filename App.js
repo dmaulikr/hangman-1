@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Text, TouchableHighlight } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Navigator } from 'react-native-deprecated-custom-components';
-import { AppLoading } from 'expo';
+import { AppLoading, FacebookAds } from 'expo';
 import cacheAssetsAsync from './cacheAssetsAsync';
 import Home from './src/Home';
 import OnePlayer from './src/OnePlayer';
@@ -53,12 +53,29 @@ export default class App extends Component {
       return (<AppLoading />);
     }
     return (
-      <Navigator
-        initialRoute={{ name: 'Home' }}
-        configureScene={(route, routeStack) => Navigator.SceneConfigs.FloatFromRight}
-        renderScene={this.renderScene}
-        style={{ flex: 1 }}
-      />
+        <View style={styles.screen}>
+            <Navigator
+              initialRoute={{ name: 'Home' }}
+              configureScene={(route, routeStack) => Navigator.SceneConfigs.FloatFromRight}
+              renderScene={this.renderScene}
+              style={styles.screen}
+            />
+            <View style={styles.ad}>
+              <FacebookAds.BannerView
+                placementId="315751648888224_317569755373080"
+                type="standard"
+              />
+            </View>
+        </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+    screen: {
+        flex: 9,
+    },
+    ad: {
+        flex: 1,
+    }
+});
