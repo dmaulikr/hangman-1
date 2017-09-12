@@ -10,7 +10,7 @@ const HangmanView = (props) => {
     <View style={styles.container}>
       <View style={styles.top}>
         <Button text='Home' handlePress={props.alertHome} style={styles.topButtons}/>
-        <Button text='New Game' handlePress={props.alertRestart} style={styles.topButtons}/>
+        <Button text='Get a Hint' handlePress={props.showModalAd} style={styles.topButtons}/>
       </View>
       <Gallows {...props}/>
       <LetterToWord {...props}/>
@@ -24,7 +24,7 @@ export default HangmanView;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#dddddd',
+    backgroundColor: '#fff',
   },
   top: {
     flex: 1,

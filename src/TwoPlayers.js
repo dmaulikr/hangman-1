@@ -13,7 +13,7 @@ export default class TwoPlayer extends Component {
 
   handlePromptSubmit = (value) => {
     const word = value.replace(/[^A-Za-z]/g,'').toLowerCase().split('');
-    if (word.length > 12) {
+    if (word.length > 13) {
         this.setState({ title: 'Enter a shorter word' })
     } else if (word.length < 2) {
         this.setState({ title: 'Enter a longer word' })
@@ -41,7 +41,7 @@ export default class TwoPlayer extends Component {
         }
         <Prompt
           title={title}
-          placeholder='Use only letters, up to 12'
+          placeholder='Use only letters, up to 13'
           visible={promptVisible}
           onCancel={this.handlePromptCancel}
           onSubmit={this.handlePromptSubmit}
@@ -56,6 +56,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ddd',
+    backgroundColor: '#fff',
   },
 });

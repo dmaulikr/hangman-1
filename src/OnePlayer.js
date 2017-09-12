@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Hangman from './Hangman';
-import { ActivityIndicator, View, Text } from 'react-native';
+import { ActivityIndicator, View, Text, StyleSheet } from 'react-native';
 import { getRandomLoading } from './hangmanHelper';
 import words from './words';
 
@@ -25,13 +25,7 @@ export default class OnePlayer extends Component {
 
   render() {
     return this.state.isLoading ?
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-        >
+      <View style={styles.loading}>
         <Text style={{ marginBottom: 10 }}>{getRandomLoading()}</Text>
         <ActivityIndicator size='large'/>
       </View>
@@ -39,3 +33,11 @@ export default class OnePlayer extends Component {
       <Hangman word={this.state.word} restartGame={this.restartGame} {...this.props}/>
   }
 }
+
+const styles = StyleSheet.create({
+    loading: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
+})

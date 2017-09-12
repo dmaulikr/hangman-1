@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { Alert } from 'react-native';
+import { Alert, Platform, AsyncStorage } from 'react-native';
 import { List } from 'immutable'
+import { FacebookAds } from 'expo';
 import HangmanView from "./HangmanView";
+
+const getRandomValue = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 export default class Hangman extends Component {
   state = { word: this.props.word, wrongGuesses: new List(), guesses: new List() };
@@ -19,12 +22,25 @@ export default class Hangman extends Component {
     return images[this.state.wrongGuesses.size + 1];
   }
 
-  alertRestart = () => {
-    Alert.alert(
-      'You have a game running.',
-      'Are you sure you want to restart?',
-      [{ text: 'No' }, { text: 'Yes', onPress: () => this.restartGame() }],
-    )
+  showModalAd = () => {
+    const adId = Platform.OS === 'ios' ? "315751648888224_318988708564518" : "315751648888224_318993631897359";
+    FacebookAds.InterstitialAdManager.showAd(adId)
+      .then(didClick => {
+          this.receiveHint();
+      })
+      .catch(error => {
+          this.receiveHint();
+      });
+  }
+
+  receiveHint = () => {
+    const { word, guesses } = this.state;
+    const letter = getRandomValue(word);
+    if (!guesses.contains(letter)) {
+        this.handleLetterPress(letter);
+    } else {
+        this.receiveHint();
+    }
   }
 
   restartGame = () => {
@@ -34,7 +50,7 @@ export default class Hangman extends Component {
 
   handleLetterPress = (letter) => {
     let { word, guesses, wrongGuesses } = this.state;
-		guesses = guesses.push(letter);
+	  guesses = guesses.push(letter);
     if (word.includes(letter)) {
       this.checkAnswer(guesses, word)
     }
@@ -55,13 +71,30 @@ export default class Hangman extends Component {
   wrongAnswer = (wrongGuesses) => {
     this.setState({ wrongGuesses });
     if (wrongGuesses.size === 6) {
-      setTimeout(() => { this.alertGameOver('You Lose') }, 1000);
+      setTimeout(() => { this.alertGameOver('You Lose') }, 750);
     }
   }
 
+  saveResult = (endState) => {
+      this.getItem(endState).then((item) => {
+          const value = `${parseInt(item, 10) + 1}`;
+          AsyncStorage.setItem(endState, value);
+      });
+  }
+
+  getItem = async (item) => {
+      const value = await AsyncStorage.getItem(item);
+      return value || 0;
+  }
+
   alertGameOver = (alertMessage) => {
-    const descr = alertMessage === 'You Lose' ?
-      `The correct word was ${this.state.word.join('').toUpperCase()}. ` : '';
+    let descr = '';
+    if (alertMessage === 'You Lose') {
+        descr = `The correct word was ${this.state.word.join('').toUpperCase()}. `;
+        this.saveResult('losses');
+    } else {
+        this.saveResult('wins');
+    }
     Alert.alert(
       alertMessage,
       `${descr}Would you like to play again?`,
@@ -86,7 +119,7 @@ export default class Hangman extends Component {
     return (
       <HangmanView
         alertHome={this.alertHome}
-        alertRestart={this.alertRestart}
+        showModalAd={this.showModalAd}
         handleLetterPress={this.handleLetterPress}
         getHangingMan={this.getHangingMan}
         word={this.state.word}
